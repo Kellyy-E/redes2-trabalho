@@ -1,0 +1,1 @@
+dados = conn.recv(4096)

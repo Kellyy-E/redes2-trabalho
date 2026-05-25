@@ -1,18 +1,24 @@
+import os
 import hashlib
 import struct
+import csv
+from datetime import datetime
+
+FLAG_DATA = 0  # Pacote contendo uma parte do arquivo
+FLAG_ACK  = 1  # Pacote de confirmação (sem dados)
+FLAG_SYN  = 2  # Início de conexão 
+FLAG_FIN  = 3  # Fim de transmissão 
 
 def gerar_x_custom_auth(matricula, nome):
     """
     Gera o Hash SHA-256 obrigatório (Matrícula + Nome).
     """
-    # Remove espaços para garantir que o hash seja consistente
     string_base = f"{matricula}{nome.strip()}"
     return hashlib.sha256(string_base.encode()).hexdigest()
 
 def calcular_checksum(dados):
     """
     Implementa uma validação simples de integridade por bloco.
-    Soma os valores dos bytes (limitado a 16 bits).
     """
     if len(dados) % 2 == 1:
         dados += b'\0'
@@ -51,7 +57,33 @@ class Packet:
         
         seq, checksum, flags, auth_hash = struct.unpack(Packet.HEADER_FORMAT, header_bytes)
         
-        # Validação de integridade 
-        # (Opcional: implementar verificação de checksum aqui)
-        
         return Packet(seq, flags, auth_hash.decode(), data), checksum
+    
+
+
+
+def salvar_log_csv(protocolo, arquivo, tempo_inicio, tempo_fim, tamanho_bytes):
+    """
+    Salva as métricas de desempenho em um arquivo CSV.
+    """
+    duracao = tempo_fim - tempo_inicio
+    # Convertendo para KB/s
+    throughput = (tamanho_bytes / 1024) / duracao if duracao > 0 else 0
+    
+    log_file = "metricas_desempenho.csv"
+    file_exists = os.path.isfile(log_file)
+    
+    with open(log_file, mode='a', newline='') as f:
+        writer = csv.writer(f)
+        # Escreve o cabeçalho apenas se o arquivo for novo
+        if not file_exists:
+            writer.writerow(['Data/Hora', 'Protocolo', 'Arquivo', 'Duração(s)', 'Throughput(KB/s)'])
+        
+        writer.writerow([
+            datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            protocolo,
+            arquivo,
+            f"{duracao:.4f}",
+            f"{throughput:.2f}"
+        ])
+    print(f"Log salvo em {log_file}")

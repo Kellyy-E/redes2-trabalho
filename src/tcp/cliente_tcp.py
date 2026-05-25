@@ -1,6 +1,9 @@
 import socket
 import time
 import os
+from src.common.utils import salvar_log_csv
+import sys
+
 
 def enviar_arquivo_tcp(caminho_arquivo, ip_destino, porta=5000):
     if not os.path.exists(caminho_arquivo):
@@ -39,8 +42,13 @@ def enviar_arquivo_tcp(caminho_arquivo, ip_destino, porta=5000):
         
     except ConnectionRefusedError:
         print("Erro: O servidor não está ligado ou a porta está fechada.")
+    # ... final do envio ...
+    fim = time.time()
+    salvar_log_csv("TCP", caminho_arquivo, inicio, fim, tamanho_arquivo)
+
 
 if __name__ == "__main__":
-    # Teste local (IP 127.0.0.1)
-    # Você precisará criar um arquivo chamado 'teste.bin' para testar
-    enviar_arquivo_tcp("teste.bin", "127.0.0.1")
+    # Pega o arquivo enviado pelo orquestrador ou usa o padrão
+    caminho = sys.argv[1] if len(sys.argv) > 1 else "data/arquivo_teste.bin"
+    enviar_arquivo_tcp(caminho, "servidor")
+    

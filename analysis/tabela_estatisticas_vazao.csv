@@ -1,0 +1,13 @@
+Origem,Cenário,Protocolo,Mínima,Média,Máxima,Desvio_Padrão
+Aplicação (Python),Cenário A (0% perda),R-UDP,298.64,303.26,306.03,2.09
+Aplicação (Python),Cenário A (0% perda),TCP,9441.02,12876.15,14323.82,934.64
+Aplicação (Python),Cenário B (5% perda),R-UDP,24.86,29.46,36.4,2.66
+Aplicação (Python),Cenário B (5% perda),TCP,118.21,640.39,3165.26,829.84
+Aplicação (Python),Cenário C (10% perda),R-UDP,2.63,13.32,16.23,2.68
+Aplicação (Python),Cenário C (10% perda),TCP,35.85,57.06,144.53,23.17
+Rede (Wireshark/tcpdump),Cenário A (0% perda),R-UDP,10.4,98.07,103.38,20.1
+Rede (Wireshark/tcpdump),Cenário A (0% perda),TCP,245.19,7447.45,8925.58,1835.67
+Rede (Wireshark/tcpdump),Cenário B (5% perda),R-UDP,5.02,9.67,12.25,1.42
+Rede (Wireshark/tcpdump),Cenário B (5% perda),TCP,97.47,241.53,704.86,157.51
+Rede (Wireshark/tcpdump),Cenário C (10% perda),R-UDP,4.13,4.64,5.43,0.34
+Rede (Wireshark/tcpdump),Cenário C (10% perda),TCP,33.0,41.28,49.37,4.78

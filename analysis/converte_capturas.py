@@ -4,7 +4,6 @@ import numpy as np
 def converter_pcap(arquivo_pcap):
     print(f"Convertendo {arquivo_pcap}")
     
-    # 1. Carrega e limpa os dados brutos do Wireshark
     df = pd.read_csv(arquivo_pcap, low_memory=False)
     df['Time'] = pd.to_numeric(df['Time'], errors='coerce')
     df['Length'] = pd.to_numeric(df['Length'], errors='coerce')
@@ -13,11 +12,9 @@ def converter_pcap(arquivo_pcap):
     
     rodadas = []
 
-    # 2. Varre os dois protocolos pelas portas de serviço
     for porta, proto in [('5000', 'TCP'), ('5001', 'R-UDP')]:
         df_p = df[df['Info'].str.contains(porta, na=False)].copy()
         
-        # Extrai portas dinâmicas do cliente
         portas_cli = {i.split('>')[0].strip() for i in df_p['Info'] if '>' in i}
         portas_cli = {p for p in portas_cli if p != porta and p.isdigit()}
         
@@ -32,7 +29,7 @@ def converter_pcap(arquivo_pcap):
                 tempo = t_fim - t_ini
                 bytes_t = df_sub['Length'].sum()
                 
-                # Filtros inteligentes por protocolo para remover fantasmas
+                # Filtros por protocolo 
                 limite_b = 500000 if proto == 'TCP' else 10000
                 limite_t = 60.0 if proto == 'TCP' else 150.0
                 

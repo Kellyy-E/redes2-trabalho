@@ -20,29 +20,21 @@ def rodar_cliente(protocolo):
     except subprocess.CalledProcessError as e:
         print(f"ERRO: Falha ao rodar o cliente {protocolo}: {e}")
 
-def main():
-    print("="*20,"INICIANDO TESTES DE CENARIOS","="*20)
-    
+def main():    
     subprocess.run(["./docker/scripts/simular_rede.sh", "limpar"], check=False)
     
-    for cenario in CENARIOS: 
-        aplicar_rede(cenario)
+    #escolhendo que cenário vou aplicar
+    aplicar_rede(CENARIOS[2])
         
-        print(f"\n--- EXECUCOES TCP ({cenario}) ---")
-        for i in range(1, EXECUCOES + 1):
+    print(f"\n--- EXECUCOES RUDP ({CENARIOS[2]}) ---")
+    for i in range(1, EXECUCOES + 1):
             print(f"[{i}/{EXECUCOES}] ", end="")
-            rodar_cliente("TCP")
+            rodar_cliente("RUDP")
             time.sleep(0.5)  
-            
-        print(f"\n--- EXECUCOES R-UDP ({cenario}) ---")
-        for i in range(1, EXECUCOES + 1):
-            print(f"[{i}/{EXECUCOES}] ", end="")
-            rodar_cliente("R-UDP")
-            time.sleep(0.5)
 
     subprocess.run(["./docker/scripts/simular_rede.sh", "limpar"], check=True)
 
-    print("="*20,"TESTES FINALIZADOS E SALVOS EM: metricas_desempenho", "="*20)
+    print("="*20,"TESTES FINALIZADOS E SALVOS", "="*20)
 
 if __name__ == "__main__":
     main()

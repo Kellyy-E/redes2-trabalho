@@ -70,7 +70,7 @@ def salvar_log_csv(protocolo, arquivo, tempo_inicio, tempo_fim, tamanho_bytes):
     # Convertendo para KB/s
     throughput = (tamanho_bytes / 1024) / duracao if duracao > 0 else 0
     
-    log_file = "metricas_desempenho.csv"
+    log_file = f"{protocolo}metricas_desempenho.csv"
     file_exists = os.path.isfile(log_file)
     
     with open(log_file, mode='a', newline='') as f:

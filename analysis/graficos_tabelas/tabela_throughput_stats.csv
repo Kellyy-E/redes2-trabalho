@@ -1,0 +1,13 @@
+Protocolo,Cenário,Origem,Mínima,Média,Máxima,Desvio Padrão
+TCP,A,Aplicação (Python),11627.03,15289.5,16974.21,1178.09
+TCP,A,Rede (Wireshark),4251.98,10098.62,12158.05,2065.89
+R-UDP,A,Aplicação (Python),336.75,342.48,344.86,2.04
+R-UDP,A,Rede (Wireshark),344.2,350.12,352.59,2.11
+TCP,B,Aplicação (Python),127.9,595.89,3298.69,877.49
+TCP,B,Rede (Wireshark),86.39,289.63,1974.04,424.57
+R-UDP,B,Aplicação (Python),26.64,30.49,37.34,3.22
+R-UDP,B,Rede (Wireshark),26.97,31.07,38.07,3.29
+TCP,C,Aplicação (Python),38.01,56.12,162.18,26.3
+TCP,C,Rede (Wireshark),28.97,43.08,138.41,23.24
+R-UDP,C,Aplicação (Python),12.32,13.82,15.63,0.92
+R-UDP,C,Rede (Wireshark),12.4,14.06,15.98,0.98

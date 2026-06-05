@@ -14,14 +14,8 @@ PORTA_SERVIDOR = '5000'
 PROTOCOLO      = 'TCP'
 SAIDA          = 'tcp_estatisticas_wireshark.csv'
 
-# ── Funções auxiliares ─────────────────────────────────────────────────────────
 
 def extrair_src_dst(info: str):
-    """
-    Extrai (src, dst) da coluna Info do Wireshark.
-    Remove prefixos como '[TCP Retransmission]' antes de parsear.
-    Retorna (None, None) se o formato não for reconhecido.
-    """
     if '>' not in info:
         return None, None
     if info.startswith('['):
@@ -47,17 +41,9 @@ def extrair_payload(info: str) -> int:
         return 0
 
 
-# ── Lógica principal de processamento ─────────────────────────────────────────
 
 def processar_arquivo(caminho: str, cenario: str) -> list[dict]:
-    """
-    Lê um CSV TCP do Wireshark e retorna uma lista de sessões concluídas.
 
-    Usa um dicionário de sessões abertas indexado por porta do cliente,
-    o que permite rastrear múltiplas conexões simultâneas — comum nos
-    cenários B e C sob perda de pacotes, onde o cliente pode iniciar uma
-    nova conexão antes do servidor encerrar a anterior.
-    """
     if not os.path.isfile(caminho):
         print(f'[ERRO] Arquivo não encontrado: {caminho}')
         sys.exit(1)
@@ -73,7 +59,6 @@ def processar_arquivo(caminho: str, cenario: str) -> list[dict]:
         t    = float(row['Time'])
 
         # ── Início de sessão: SYN do cliente ──────────────────────────────
-        # Exclui: SYN-ACK do servidor e retransmissões de SYN
         if ('[SYN]' in info
                 and '[SYN, ACK]' not in info
                 and '[TCP Retransmission]' not in info):
@@ -86,11 +71,9 @@ def processar_arquivo(caminho: str, cenario: str) -> list[dict]:
         if src is None:
             continue
 
-        # ── Acumula payload do cliente → servidor ─────────────────────────
         if dst == PORTA_SERVIDOR and src in sessoes_abertas:
             sessoes_abertas[src]['bytes'] += extrair_payload(info)
 
-        # ── Fim de sessão: [FIN, ACK] do servidor → cliente ───────────────
         if '[FIN, ACK]' in info and src == PORTA_SERVIDOR and dst in sessoes_abertas:
             sess       = sessoes_abertas.pop(dst)
             duracao    = t - sess['t_inicio']
@@ -104,7 +87,6 @@ def processar_arquivo(caminho: str, cenario: str) -> list[dict]:
                 'Throughput(KB/s)': round(throughput, 4),
             })
 
-    # Ordena por tempo de início e numera as repetições
     sessoes_concluidas.sort(key=lambda s: s['_t_inicio'])
     for i, s in enumerate(sessoes_concluidas, start=1):
         s['Repeticao'] = i
@@ -113,7 +95,6 @@ def processar_arquivo(caminho: str, cenario: str) -> list[dict]:
     return sessoes_concluidas
 
 
-# ── Main ───────────────────────────────────────────────────────────────────────
 
 def main():
     script_dir = os.path.dirname(os.path.abspath(__file__))

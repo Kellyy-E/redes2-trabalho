@@ -33,7 +33,7 @@ Cada pacote de aplicação transmitido via R-UDP possui um cabeçalho fixo empac
 
 ```text
 redes2-trabalho/
-├── data/                             # Dados de entrada, ficheiros recebidos e logs
+├── data/                             # Dados de entrada, arquivos recebidos, capturas e logs da aplicação
 │   ├── arquivo_teste.bin             # Ficheiro binário padrão usado nas transmissões
 │   ├── recebido_rudp.bin             # Ficheiro final gravado via transporte R-UDP
 │   └── capturasCSV/                  # Ficheiros processados extraídos do Wireshark

@@ -1,6 +1,6 @@
 # Análise de Desempenho e Confiabilidade: TCP vs. R-UDP
 
-Este projeto consiste numa aplicação cliente/servidor desenvolvida em **Python 3.14** para a disciplina de **Redes de Computadores II** da **Universidade Federal do Piauí (UFPI)**. O principal objetivo é implementar e avaliar comparativamente a transferência de ficheiros utilizando o protocolo nativo orientado à conexão (**TCP**) contra uma camada de transporte customizada altamente confiável construída sobre o protocolo UDP (**R-UDP - Reliable UDP**), utilizando validação cruzada através de capturas de tráfego físico.
+Este projeto consiste numa aplicação cliente/servidor desenvolvida em **Python 3.14** para a disciplina de **Redes de Computadores II** da **Universidade Federal do Piauí (UFPI)**. O principal objetivo é implementar e avaliar comparativamente a transferência de ficheiros utilizando o protocolo nativo orientado à conexão (**TCP**) contra uma camada de transporte customizada confiável construída sobre o protocolo UDP (**R-UDP - Reliable UDP**), utilizando validação cruzada através de capturas de tráfego físico.
 
 O ambiente simula condições dinâmicas de degradação de rede através do utilitário `tc` (*Traffic Control* do Linux) empacotado dentro de contêineres isolados em ambiente **Docker**.
 
@@ -33,7 +33,7 @@ Cada pacote de aplicação transmitido via R-UDP possui um cabeçalho fixo empac
 
 ```text
 redes2-trabalho/
-├── data/                             # Dados de entrada, ficheiros recebidos e logs
+├── data/                             # Dados de entrada, arquivos recebidos, capturas e logs da aplicação
 │   ├── arquivo_teste.bin             # Ficheiro binário padrão usado nas transmissões
 │   ├── recebido_rudp.bin             # Ficheiro final gravado via transporte R-UDP
 │   └── capturasCSV/                  # Ficheiros processados extraídos do Wireshark

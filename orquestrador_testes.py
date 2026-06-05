@@ -23,12 +23,13 @@ def rodar_cliente(protocolo):
 def main():    
     subprocess.run(["./docker/scripts/simular_rede.sh", "limpar"], check=False)
     
-    #escolhendo que cenário vou aplicar
+    #ESCOLHA DO CENÁRIO A SER APLICADO
     aplicar_rede(CENARIOS[0])
         
     print(f"\n--- EXECUCOES RUDP ({CENARIOS[0]}) ---")
     for i in range(1, EXECUCOES + 1):
             print(f"[{i}/{EXECUCOES}] ", end="")
+            #ESCOLHA DO PROTOCOLO QUE SERÁ UTILIZADO (TCP ou RUDP)
             rodar_cliente("TCP")
             time.sleep(0.5)  
 

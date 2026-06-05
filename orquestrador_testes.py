@@ -26,7 +26,7 @@ def main():
     #escolhendo que cenário vou aplicar
     aplicar_rede(CENARIOS[0])
         
-    print(f"\n--- EXECUCOES RUDP ({CENARIOS[2]}) ---")
+    print(f"\n--- EXECUCOES RUDP ({CENARIOS[0]}) ---")
     for i in range(1, EXECUCOES + 1):
             print(f"[{i}/{EXECUCOES}] ", end="")
             rodar_cliente("TCP")

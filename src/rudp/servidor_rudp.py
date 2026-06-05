@@ -55,7 +55,7 @@ def iniciar_servidor_rudp(ip="0.0.0.0", porta=5001):
                         ack = Packet(seq=pacote.seq, flags=FLAG_ACK, auth_hash=pacote.auth_hash.decode())
                         servidor.sendto(ack.pack(), addr)
                         
-                        # Alterna entre 0 e 1 de forma correta
+                        # Alterna entre 0 e 1 
                         esperado_seq = 1 - esperado_seq
                     else:
                         # Se o cliente retransmitiu o pacote anterior, o ACK se perdeu na rede.

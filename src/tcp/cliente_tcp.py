@@ -31,7 +31,7 @@ def enviar_arquivo_tcp(caminho_arquivo, ip_destino, porta=5000):
         cliente.close()
         fim = time.time()
         
-        # Cálculos exigidos (Item 18 e 42 do PDF)
+        # Cálculos exigidos 
         duracao = fim - inicio
         throughput_kbs = (tamanho_arquivo / 1024) / duracao if duracao > 0 else 0
         
@@ -42,13 +42,11 @@ def enviar_arquivo_tcp(caminho_arquivo, ip_destino, porta=5000):
         
     except ConnectionRefusedError:
         print("Erro: O servidor não está ligado ou a porta está fechada.")
-    # ... final do envio ...
     fim = time.time()
     salvar_log_csv("TCP", caminho_arquivo, inicio, fim, tamanho_arquivo)
 
 
 if __name__ == "__main__":
-    # Pega o arquivo enviado pelo orquestrador ou usa o padrão
     caminho = sys.argv[1] if len(sys.argv) > 1 else "data/arquivo_teste.bin"
     enviar_arquivo_tcp(caminho, "servidor")
     

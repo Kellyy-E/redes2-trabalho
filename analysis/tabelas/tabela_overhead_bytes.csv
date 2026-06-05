@@ -4,5 +4,5 @@ Transporte (UDP),Cabeçalho UDP,8
 Aplicação (R-UDP),Número de Sequência (seq),4
 Aplicação (R-UDP),Checksum,2
 Aplicação (R-UDP),Flags de controle,1
-Aplicação (R-UDP),X-Custom-Auth (SHA-256 hex),36
+Aplicação (R-UDP),X-Custom-Auth (SHA-256),36
 TOTAL,—,71

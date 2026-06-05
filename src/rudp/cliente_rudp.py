@@ -34,7 +34,7 @@ def enviar_arquivo_rudp(caminho_arquivo, ip_destino, porta=5001):
             pacote = Packet(seq=seq_atual, flags=FLAG_DATA, auth_hash=auth_hash, data=dados)
             pacote_binario = pacote.pack()
             
-            # Stop-and-Wait Puro 
+            # Stop-and-Wait  
             confirmado = False
             while not confirmado:
                 try:
